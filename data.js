@@ -13,8 +13,8 @@ window.siteData = {
     "noticeText": "뉴로모픽 소자, 차세대 반도체 시스템 구현 연구에 관심 있는 학생을 모집합니다."
   },
   "design": {
-    "heroTextTop": 84,
-    "heroTextLeft": 5,
+    "heroTextTop": 160,
+    "heroTextLeft": 9,
     "heroTextWidth": 720,
     "heroEyebrowTop": 0,
     "heroEyebrowX": 0,
