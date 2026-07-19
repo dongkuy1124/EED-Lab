@@ -1489,12 +1489,8 @@ body.editor-controls-mode .editor-publication-year-tools {
   }
 }
 
-/* Keep long desktop themes compact and reveal the next section below the home hero. */
+/* Keep long desktop research themes compact without changing the home page height. */
 @media (min-width: 1101px) {
-  .hero {
-    min-height: clamp(620px, 76vh, 780px);
-  }
-
   .research-theme-card .research-visual {
     aspect-ratio: 3 / 1;
   }
