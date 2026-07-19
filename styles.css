@@ -1433,3 +1433,43 @@ body.editor-controls-mode .editor-publication-year-tools {
 .member-photo-wrap .avatar.photo-placeholder::after {
   display: none;
 }
+.editor-controls-mode .research-keyword-add {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  min-height: 28px;
+  padding: 0;
+  color: #0f7d7e;
+  background: #fff;
+  border: 1px dashed #8fc4c6;
+  border-radius: 999px;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.editor-controls-mode .research-keyword-add:hover {
+  color: #fff;
+  background: #0f7d7e;
+}
+.editor-controls-mode .research-keyword-delete {
+  width: 18px;
+  height: 18px;
+  margin: 0 1px 0 -12px;
+  padding: 0;
+  color: #fff;
+  background: #c74436;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.editor-controls-mode .research-keyword-delete:hover {
+  background: #982d23;
+}

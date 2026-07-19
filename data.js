@@ -76,24 +76,20 @@ window.siteData = {
         "color": "#454545"
       }
     },
-    "textOverrides": {
-      "cvText10": "University of Pennsylvania, Sept. 2025 - June. 2026"
-    },
+    "textOverrides": {},
     "deleted": {
       "pi.html": {
         "memberSectionLabel1": true,
         "memberSectionTitle1": true,
         "pageIntro": true,
-        "pageLabel": true,
-        "piText4": true
+        "piText4": true,
+        "membersPageIntro": true
       },
       "students.html": {
-        "pageLabel": true,
         "memberSectionLabel1": true
       },
       "alumni.html": {
-        "memberSectionLabel1": true,
-        "pageLabel": true
+        "memberSectionLabel1": true
       },
       "news.html": {
         "pageLabel": true,
@@ -101,12 +97,35 @@ window.siteData = {
       },
       "achievements.html": {
         "pageIntro": true,
-        "jcrNote": true
+        "jcrNote": true,
+        "achievementsPageIntro": true
       },
       "contact.html": {
         "pageLabel": true,
         "contactCard": true
+      },
+      "research.html": {
+        "researchCard1": true,
+        "researchPageLabel": true
       }
+    },
+    "richTextOverrides": {
+      "contactBody": "관심 분야와 간단한 이력서를 함께 보내주시면 더 빠르게 논의할 수 있습니다.<div>E-mail: dongkuy1124@gmail.com</div>",
+      "researchText3": "<strong data-drag-key=\"inline_research_9\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\">Problem.</strong> <span class=\"research-detail-text\" data-drag-key=\"researchDetail1\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text; color: rgb(69, 69, 69);\" data-rich-text-input-bound=\"true\">기존 전자 시스템은 고정된 회로 구조와 높은 에너지 소모로 인해 아날로그 신호 처리, 저전력 및 실시간 연산에 한계를 가집니다.</span>",
+      "researchText7": "<strong data-drag-key=\"inline_research_26\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\">Problem.</strong> <span class=\"research-detail-text\" data-drag-key=\"researchDetail3\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text; color: rgb(69, 69, 69);\" data-rich-text-input-bound=\"true\">기존 컴퓨팅 구조는 메모리와 연산 장치 사이의 데이터 병목 현상으로 인해 AI 연산에서 소비 에너지 상승과 속도 저하가 발생합니다.</span>",
+      "researchText8": "<strong data-drag-key=\"inline_research_29\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\">Approach.</strong> <span class=\"research-detail-text\" data-drag-key=\"researchDetail4\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text; color: rgb(69, 69, 69);\" data-rich-text-input-bound=\"true\">메모리와 연산 기능이 통합된 뉴로모픽 소자를 이용하여 효율적인 AI 연산 시스템을 개발합니다.</span>",
+      "researchPoint4": "다양한 메모리 성능을 가지는 뉴로모픽 소자를 이용하여 효율적 연산 시스템을 설계합니다.",
+      "researchPoint5": "Arithmetic 연산 기능이 포함된 뉴로모픽 소자를 이용하여 AI 연산 효율을 극대화합니다.",
+      "researchPoint6": "대면적 Array를 통해 In-memory computing system을 구현합니다.",
+      "researchText11": "<strong data-drag-key=\"inline_research_43\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\">Problem.</strong> <span class=\"research-detail-text\" data-drag-key=\"researchDetail5\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text; color: rgb(69, 69, 69);\" data-rich-text-input-bound=\"true\">실리콘 기반 소자는 실리콘 소재의 물성과 소자의 구조적 한계로 인해 유연 및 지능형 Edge 시스템 구현이 제한됩니다.</span>",
+      "researchText12": "<strong data-drag-key=\"inline_research_46\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\">Approach.</strong> <span class=\"research-detail-text\" data-drag-key=\"researchDetail6\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text; color: rgb(69, 69, 69);\" data-rich-text-input-bound=\"true\">2D 소재, 유무기/하이브리드 재료, 이온성 및 광전 기능성 재료를 활용하여 포스트 실리콘 전자소자와 시스템을 설계합니다.</span>",
+      "researchPoint7": "차세대 반도체 재료와 계면 제어 기반의 차세대 전자 소자를 제작합니다.",
+      "researchPageTitle": "Research Themes",
+      "contactPageTitle": "Join &amp; Collaborate",
+      "piText3": "<div style=\"user-select: text;\">Assistant Professor</div><div style=\"user-select: text;\">School of Semiconductor and Convergence Engineering</div><div style=\"user-select: text;\">Department of Photonics and Nanoelectronics</div>Hanyang University ERICA",
+      "piText5": "Email: dongkuy1124@gmail.com",
+      "inline_members_21": "\n            <strong data-drag-key=\"cvText9\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\">Assistant Professor</strong>\n            <span data-drag-key=\"cvText10\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\"><div style=\"user-select: text;\">School of Semiconductor and Convergence Engineering</div><div><span style=\"color: rgb(93, 105, 114); display: inline !important;\">Department of Photonics and Nanoelectronics</span></div></span><span data-drag-key=\"cvText11\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\">Hanyang University ERICA, Sept. 2026 - Present</span>\n          ",
+      "inline_members_25": "\n            <strong data-drag-key=\"cvText12\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\">Visiting Scholar</strong>\n            <span data-drag-key=\"cvText13\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\">University of Pennsylvania, Sept. 2025 - Jun. 2026</span><span data-drag-key=\"cvText14\" contenteditable=\"true\" data-rich-text-editable=\"true\" style=\"user-select: text;\" data-rich-text-input-bound=\"true\">Advisor: Prof. Deep Jariwala</span>\n          "
     }
   },
   "research": {
@@ -162,7 +181,6 @@ window.siteData = {
         "keywords": [
           "Post-silicon device",
           "Emerging materials",
-          "2D semiconductor",
           "Device-system integration"
         ]
       }
@@ -211,6 +229,13 @@ window.siteData = {
       }
     ],
     "experience": [
+      {
+        "title": "Assistant Professor",
+        "details": [
+          "Department of Photonics and Nanoelectronics",
+          "Hanyang University ERICA, Sept. 2026 - Present"
+        ]
+      },
       {
         "title": "Visiting Scholar",
         "details": [
@@ -488,5 +513,8 @@ window.siteData = {
       "link": "https://doi.org/10.1002/adma.202002653"
     }
   ],
-  "customSections": {}
+  "customSections": {},
+  "meta": {
+    "assistantProfessorExperienceAdded": true
+  }
 };

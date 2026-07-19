@@ -382,7 +382,7 @@ const renderResearch = () => {
             ${area.problem ? `<p class="research-detail"><strong>Problem.</strong> <span class="research-detail-text">${escapeHtml(area.problem)}</span></p>` : ""}
             ${area.approach ? `<p class="research-detail"><strong>Approach.</strong> <span class="research-detail-text">${escapeHtml(area.approach)}</span></p>` : ""}
             ${Array.isArray(area.points) && area.points.length ? `<ul class="research-points">${area.points.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}</ul>` : ""}
-            ${Array.isArray(area.keywords) && area.keywords.length ? `<div class="research-keywords">${area.keywords.map((keyword) => `<span>${escapeHtml(keyword)}</span>`).join("")}</div>` : ""}
+            ${Array.isArray(area.keywords) ? `<div class="research-keywords">${area.keywords.map((keyword, keywordIndex) => `<span data-research-keyword="${index}:${keywordIndex}" data-edit-path="research.areas.${index}.keywords.${keywordIndex}">${escapeHtml(keyword)}</span>${previewMode && editorControlsMode ? `<button type="button" class="research-keyword-delete" data-delete-research-keyword="${index}:${keywordIndex}" aria-label="Delete keyword">×</button>` : ""}`).join("")}${previewMode && editorControlsMode ? `<button type="button" class="research-keyword-add" data-add-research-keyword="${index}" aria-label="Add keyword">+</button>` : ""}</div>` : ""}
           </div>
         </article>
       `,
@@ -394,11 +394,11 @@ const renderMembers = () => {
   if (document.body.dataset.page !== "members") return;
   setText("[data-members-intro]", data.members.intro);
   const labels = data.members.sectionLabels || {};
-  setText("#pi .section-heading .eyebrow", labels.piEyebrow || "PI");
+  setText("#pi .section-heading .eyebrow", labels.piEyebrow || "Members");
   setText("#pi .section-heading h2", labels.piTitle || "Principal Investigator");
-  setText("#students .section-heading .eyebrow", labels.studentsEyebrow || "Students");
+  setText("#students .section-heading .eyebrow", labels.studentsEyebrow || "Members");
   setText("#students .section-heading h2", labels.studentsTitle || "Students");
-  setText("#alumni .section-heading .eyebrow", labels.alumniEyebrow || "Alumni");
+  setText("#alumni .section-heading .eyebrow", labels.alumniEyebrow || "Members");
   setText("#alumni .section-heading h2", labels.alumniTitle || "Alumni");
   const professor = data.members.pi || data.members.professor;
   setText("[data-professor-name]", professor.name);
@@ -863,6 +863,8 @@ const captureTextRangeSelection = () => {
   return {
     key: target.dataset.dragKey,
     range: range.cloneRange(),
+    start: textOffsetWithin(target, range.startContainer, range.startOffset),
+    end: textOffsetWithin(target, range.endContainer, range.endOffset),
     format: {
       fontSize: computed.fontSize,
       fontWeight: computed.fontWeight,
@@ -875,17 +877,68 @@ const captureTextRangeSelection = () => {
 
 document.addEventListener("selectionchange", () => {
   const captured = captureTextRangeSelection();
-  if (captured) lastTextRangeSelection = captured;
-});
-const textOffsetWithin = (root, node, offset) => {
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
-  let total = 0;
-  let current;
-  while ((current = walker.nextNode())) {
-    if (current === node) return total + offset;
-    total += current.textContent.length;
+  if (captured) {
+    lastTextRangeSelection = captured;
+    updateRangeColorToolbar(captured);
+  } else {
+    updateRangeColorToolbar(null);
   }
-  return total;
+});
+document.addEventListener("pointerup", () => {
+  const captured = captureTextRangeSelection();
+  if (captured) lastTextRangeSelection = captured;
+}, true);
+
+// Range formatting stays within the preview, so color actions do not lose selection.
+const rangeColorToolbar = (() => {
+  if (!previewMode || !editorControlsMode) return null;
+  const toolbar = document.createElement("div");
+  toolbar.dataset.editorRangeToolbar = "true";
+  Object.assign(toolbar.style, { position: "fixed", zIndex: "10000", display: "none", gap: "5px", padding: "6px", background: "#fff", border: "1px solid #cbd9dc", borderRadius: "6px", boxShadow: "0 8px 22px rgba(23, 32, 38, .22)", alignItems: "center" });
+  const addPalette = (colors, property, square = false) => colors.forEach((color) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.title = `Apply ${color}`;
+    Object.assign(button.style, { width: "20px", height: "20px", minHeight: "20px", padding: "0", borderRadius: square ? "3px" : "50%", border: color === "#ffffff" ? "1px solid #7a878c" : "1px solid transparent", background: color, cursor: "pointer" });
+    button.addEventListener("pointerdown", (event) => { event.preventDefault(); event.stopPropagation(); });
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      const applied = applyNativeTextStyle(property, color);
+      if (applied) toolbar.style.display = "none";
+      window.parent?.postMessage({ type: "eed-range-toolbar-result", applied }, "*");
+    });
+    toolbar.append(button);
+  });
+  addPalette(["#172026", "#0f7d7e", "#d89a25", "#b34242", "#2f69c9", "#ffffff"], "color");
+  const divider = document.createElement("span");
+  Object.assign(divider.style, { width: "1px", height: "22px", background: "#cbd9dc", margin: "0 2px" });
+  toolbar.append(divider);
+  addPalette(["#fff3cd", "#dff3f3", "#dceaff", "#fde2e2", "#e8edf0", "#ffffff"], "backgroundColor", true);
+  document.body.append(toolbar);
+  return toolbar;
+})();
+
+const updateRangeColorToolbar = (captured) => {
+  if (!rangeColorToolbar) return;
+  if (!captured?.range) { rangeColorToolbar.style.display = "none"; return; }
+  const rect = captured.range.getBoundingClientRect();
+  if (!rect.width && !rect.height) return;
+  rangeColorToolbar.style.left = `${Math.max(8, rect.left)}px`;
+  rangeColorToolbar.style.top = `${Math.max(8, rect.top - 40)}px`;
+  rangeColorToolbar.style.display = "flex";
+};
+
+const textOffsetWithin = (root, node, offset) => {
+  if (!root || !node || !root.contains(node)) return null;
+  try {
+    const range = document.createRange();
+    range.selectNodeContents(root);
+    range.setEnd(node, offset);
+    return range.toString().length;
+  } catch {
+    return null;
+  }
 };
 
 const textPointAtOffset = (root, offset) => {
@@ -910,7 +963,10 @@ const applyRangeStyle = (element, rangeStyle) => {
   span.dataset.editorRangeStyle = "true";
   ["fontSize", "fontWeight", "color", "lineHeight", "backgroundColor"].forEach((property) => {
     const value = rangeStyle[property];
-    if (value !== undefined && value !== null && value !== "" && value !== "normal") span.style[property] = String(value);
+    if (value !== undefined && value !== null && value !== "" && value !== "normal") {
+      const cssProperty = property.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`);
+      span.style.setProperty(cssProperty, String(value), "important");
+    }
   });
   span.append(range.extractContents());
   range.insertNode(span);
@@ -928,13 +984,16 @@ const normalizedTextFormat = (format = {}) => {
   return result;
 };
 
-const applyCopiedFormatToRange = (format) => {
-  const captured = captureTextRangeSelection() || lastTextRangeSelection;
+const applyCopiedFormatToRange = (format, useStoredSelection = false) => {
+  const captured = useStoredSelection ? lastTextRangeSelection : (captureTextRangeSelection() || lastTextRangeSelection);
   const element = captured?.key ? document.querySelector(`[data-drag-key="${captured.key}"]`) : null;
-  const range = captured?.range;
-  if (!element || !range || range.collapsed || !element.contains(range.startContainer) || !element.contains(range.endContainer)) return false;
-  const start = textOffsetWithin(element, range.startContainer, range.startOffset);
-  const end = textOffsetWithin(element, range.endContainer, range.endOffset);
+  if (!element) return false;
+  const range = captured.range;
+  const hasStoredOffsets = Number.isFinite(captured.start) && Number.isFinite(captured.end);
+  const rangeIsUsable = range && !range.collapsed && element.contains(range.startContainer) && element.contains(range.endContainer);
+  if (!hasStoredOffsets && !rangeIsUsable) return false;
+  const start = hasStoredOffsets ? captured.start : textOffsetWithin(element, range.startContainer, range.startOffset);
+  const end = hasStoredOffsets ? captured.end : textOffsetWithin(element, range.endContainer, range.endOffset);
   const style = normalizedTextFormat(format);
   if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start || !Object.keys(style).length) return false;
   const rangeStyle = { start, end, ...style };
@@ -951,6 +1010,8 @@ const applyCopiedFormatToRange = (format) => {
   window.parent?.postMessage({ type: "eed-design-update", design: data.design }, "*");
   return true;
 };
+window.eedApplyTextRangeStyle = (property, value) => applyNativeTextStyle(property, value);
+
 const applyStoredRangeStyles = () => {
   const rangeStyles = data?.design?.rangeStyles || {};
   Object.entries(rangeStyles).forEach(([key, styles]) => {
@@ -958,6 +1019,90 @@ const applyStoredRangeStyles = () => {
     if (!element || element.dataset.rangeStylesApplied === "true") return;
     [...styles].sort((a, b) => a.start - b.start).forEach((rangeStyle) => applyRangeStyle(element, rangeStyle));
     element.dataset.rangeStylesApplied = "true";
+  });
+};
+
+const isRichTextTarget = (element) => Boolean(
+  element?.dataset?.dragKey && element.matches?.("p, h1, h2, h3, h4, h5, h6, li, a, span, strong, em")
+);
+
+const persistRichText = (element) => {
+  const key = element?.dataset?.dragKey;
+  if (!key) return false;
+  data.design ||= {};
+  data.design.richTextOverrides ||= {};
+  data.design.richTextOverrides[key] = element.innerHTML;
+  localStorage.setItem("siteDataPreview", JSON.stringify(data));
+  window.parent?.postMessage({ type: "eed-design-update", design: data.design }, "*");
+  return true;
+};
+
+const enableRichTextTarget = (element) => {
+  if (!isRichTextTarget(element)) return false;
+  element.contentEditable = "true";
+  element.dataset.richTextEditable = "true";
+  element.style.userSelect = "text";
+  if (!element.dataset.richTextInputBound) {
+    element.dataset.richTextInputBound = "true";
+    element.addEventListener("input", () => persistRichText(element));
+    element.addEventListener("blur", () => {
+      if (!element.dataset.researchKeyword) return;
+      const [areaIndex, keywordIndex] = element.dataset.researchKeyword.split(":").map(Number);
+      window.parent?.postMessage({ type: "eed-set-research-keyword", areaIndex, keywordIndex, value: element.textContent.trim() }, "*");
+    });
+  }
+  return true;
+};
+
+const activeRichTextTarget = () => {
+  const selection = window.getSelection();
+  if (!selection?.rangeCount || selection.isCollapsed) return null;
+  const range = selection.getRangeAt(0);
+  const node = range.commonAncestorContainer.nodeType === Node.ELEMENT_NODE ? range.commonAncestorContainer : range.commonAncestorContainer.parentElement;
+  const element = node?.closest?.("[data-drag-key]");
+  return isRichTextTarget(element) ? { element, range, selection } : null;
+};
+
+const applyNativeTextStyle = (property, value) => {
+  const active = activeRichTextTarget();
+  if (!active || !enableRichTextTarget(active.element)) return false;
+  const { element, range, selection } = active;
+  window.parent?.postMessage({ type: "eed-design-history" }, "*");
+  let applied = false;
+  try {
+    if (property === "color" || property === "backgroundColor") {
+      document.execCommand?.("styleWithCSS", false, true);
+      const command = property === "backgroundColor" ? "hiliteColor" : "foreColor";
+      applied = Boolean(document.execCommand?.(command, false, value));
+      if (!applied && property === "backgroundColor") applied = Boolean(document.execCommand?.("backColor", false, value));
+    }
+  } catch {}
+  if (!applied) {
+    const start = textOffsetWithin(element, range.startContainer, range.startOffset);
+    const end = textOffsetWithin(element, range.endContainer, range.endOffset);
+    applied = Number.isFinite(start) && Number.isFinite(end) ? applyRangeStyle(element, { start, end, [property]: value }) : false;
+  }
+  if (!applied) return false;
+  persistRichText(element);
+  selection.removeAllRanges();
+  lastTextRangeSelection = null;
+  return true;
+};
+
+const applyStoredRichTextOverrides = () => {
+  const overrides = data?.design?.richTextOverrides || {};
+  Object.entries(overrides).forEach(([key, html]) => {
+    const element = document.querySelector(`[data-drag-key="${key}"]`);
+    if (isRichTextTarget(element) && typeof html === "string") element.innerHTML = html;
+  });
+};
+
+const registerInlineTextTargets = () => {
+  const page = pageSlug();
+  document.querySelectorAll("main h1, main h2, main h3, main h4, main h5, main h6, main p, main li, main a, main em, main strong, main span").forEach((element, index) => {
+    if (!element.textContent.trim() || element.closest("button, input, select, textarea, .menu-button")) return;
+    if (!element.dataset.dragKey) element.dataset.dragKey = `inline_${page}_${index + 1}`;
+    if (previewMode && editorControlsMode) enableRichTextTarget(element);
   });
 };
 
@@ -1052,9 +1197,10 @@ const markDragTargets = () => {
     return targets;
   }
 
-  add("LABEL", ".page-hero .eyebrow", "pageLabel");
-  add("TITLE", ".page-hero h1", "pageTitle");
-  add("INTRO", ".page-hero p:not(.eyebrow)", "pageIntro");
+  // Page heroes use page-scoped keys so edits never cross into another tab.
+  add("LABEL", ".page-hero .eyebrow", `${page}PageLabel`);
+  add("TITLE", ".page-hero h1", `${page}PageTitle`);
+  add("INTRO", ".page-hero p:not(.eyebrow)", `${page}PageIntro`);
 
   if (page === "research") {
     addAll("CARD", ".research-card", "researchCard");
@@ -1063,7 +1209,12 @@ const markDragTargets = () => {
     addAll("CARD TEXT", ".research-card p", "researchText");
     addAll("DETAIL TEXT", ".research-card .research-detail-text", "researchDetail");
     addAll("POINT", ".research-card .research-points li", "researchPoint");
-  }
+    document.querySelectorAll("[data-research-keyword]").forEach((element) => {
+      const [areaIndex, keywordIndex] = element.dataset.researchKeyword.split(":");
+      const key = `researchKeyword_${areaIndex}_${keywordIndex}`;
+      element.dataset.dragKey = key;
+      targets.push({ label: `KEYWORD ${Number(keywordIndex) + 1}`, element, key });
+    });  }
   if (page === "members") {
     addAll("SECTION LABEL", ".member-subsection > .section-heading .eyebrow", "memberSectionLabel");
     addAll("SECTION TITLE", ".member-subsection > .section-heading h2", "memberSectionTitle");
@@ -1231,18 +1382,22 @@ const enablePreviewDrag = () => {
   };
 
   const targets = markDragTargets();
+  registerInlineTextTargets();
   applyStoredPositions();
   applyStoredElementStyles();
   applyStoredTextOverrides();
+  applyStoredRichTextOverrides();
   applyStoredRangeStyles();
-
+  targets.forEach(({ element }) => enableRichTextTarget(element));
   targets.forEach((target) => {
     const element = target.element;
     element.style.outline = "";
     element.style.outlineOffset = "";
-    element.style.userSelect = "none";
+    // Keep normal browser text selection available in Edit mode. Moving remains
+    // deliberately confined to the yellow handle above each selected element.
+    element.style.userSelect = "text";
     element.querySelectorAll?.("*").forEach((child) => {
-      child.style.userSelect = "none";
+      if (!child.matches?.("button, input, select, textarea")) child.style.userSelect = "text";
     });
 
     const handle = document.createElement("button");
@@ -1435,6 +1590,7 @@ const enablePreviewSelection = () => {
   applyStoredPositions();
   applyStoredElementStyles();
   applyStoredTextOverrides();
+  applyStoredRichTextOverrides();
   applyStoredRangeStyles();
   const selectedItems = new Map();
   const startDirectTextEditing = (element, key, label) => {
@@ -1978,6 +2134,29 @@ window.addEventListener("message", (event) => {
     window.parent?.postMessage({ type: "eed-paste-text-format-result", applied }, "*");
     return;
   }
+  if (event.data?.type === "eed-add-research-keyword") {
+    window.parent?.postMessage({ type: "eed-add-research-keyword", areaIndex: Number(event.data.areaIndex) }, "*");
+    return;
+  }
+  if (event.data?.type === "eed-delete-research-keyword") {
+    window.parent?.postMessage({ type: "eed-delete-research-keyword", areaIndex: Number(event.data.areaIndex), keywordIndex: Number(event.data.keywordIndex) }, "*");
+    return;
+  }
+  if (event.data?.type === "eed-native-text-style") {
+    const applied = applyNativeTextStyle(event.data.property, event.data.value);
+    window.parent?.postMessage({ type: "eed-apply-text-range-style-result", property: event.data.property, value: event.data.value, applied }, "*");
+    return;
+  }
+  if (event.data?.type === "eed-apply-text-range-style") {
+    const applied = applyCopiedFormatToRange({ [event.data.property]: event.data.value }, true);
+    window.parent?.postMessage({
+      type: "eed-apply-text-range-style-result",
+      property: event.data.property,
+      value: event.data.value,
+      applied,
+    }, "*");
+    return;
+  }
   if (event.data?.type === "eed-apply-line-spacing-range") {
     applyLineSpacingToSelection(event.data);
     return;
@@ -2029,10 +2208,13 @@ renderCustomSections();
 markDragTargets();
 renderEmbeddedBlocks();
 markDragTargets();
+// Assign stable text keys and restore user edits in both Edit and visitor Preview modes.
+registerInlineTextTargets();
 applyStoredPositions();
 applyStoredElementStyles();
 applyStoredTextOverrides();
-  applyStoredRangeStyles();
+applyStoredRichTextOverrides();
+applyStoredRangeStyles();
 applyDeletedElements();
 if (previewMode && editorControlsMode) {
   window.addEventListener("keydown", (event) => {
@@ -2043,6 +2225,23 @@ if (previewMode && editorControlsMode) {
     event.stopImmediatePropagation();
     window.parent?.postMessage({ type: "eed-undo-request" }, "*");
   });
+}
+if (previewMode && editorControlsMode) {
+  document.addEventListener("click", (event) => {
+    const deleteKeyword = event.target.closest?.("[data-delete-research-keyword]");
+    if (deleteKeyword) {
+      const [areaIndex, keywordIndex] = deleteKeyword.dataset.deleteResearchKeyword.split(":").map(Number);
+      event.preventDefault();
+      event.stopPropagation();
+      window.parent?.postMessage({ type: "eed-delete-research-keyword", areaIndex, keywordIndex }, "*");
+      return;
+    }
+    const addKeyword = event.target.closest?.("[data-add-research-keyword]");
+    if (!addKeyword) return;
+    event.preventDefault();
+    event.stopPropagation();
+    window.parent?.postMessage({ type: "eed-add-research-keyword", areaIndex: Number(addKeyword.dataset.addResearchKeyword) }, "*");
+  }, true);
 }
 enablePreviewSelection();
 enablePreviewDrag();
