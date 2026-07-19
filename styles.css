@@ -1473,3 +1473,18 @@ body.editor-controls-mode .editor-publication-year-tools {
 .editor-controls-mode .research-keyword-delete:hover {
   background: #982d23;
 }
+
+/* Balanced desktop proportions for image-led research themes. */
+@media (min-width: 901px) {
+  .research-theme-card {
+    grid-template-columns: minmax(340px, 42%) minmax(0, 58%) !important;
+  }
+
+  .research-theme-card .research-visual {
+    aspect-ratio: 2 / 1;
+  }
+
+  .research-theme-copy {
+    padding: 30px 44px;
+  }
+}
