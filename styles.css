@@ -1488,3 +1488,14 @@ body.editor-controls-mode .editor-publication-year-tools {
     padding: 30px 44px;
   }
 }
+
+/* Keep long desktop themes compact and reveal the next section below the home hero. */
+@media (min-width: 1101px) {
+  .hero {
+    min-height: clamp(620px, 76vh, 780px);
+  }
+
+  .research-theme-card .research-visual {
+    aspect-ratio: 3 / 1;
+  }
+}
