@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Research | EED Lab</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="research">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Go to home">
+        <span class="brand-mark">E</span>
+        <span><strong data-lab-short>EED Lab</strong><small data-lab-subtitle>Emerging Electronic Device</small></span>
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a class="active" href="research.html">Research</a>
+        <div class="nav-dropdown">
+          <a href="pi.html">Members</a>
+          <div class="nav-submenu" aria-label="Members submenu">
+            <a href="pi.html">PI</a>
+            <a href="students.html">Students</a>
+            <a href="alumni.html">Alumni</a>
+          </div>
+        </div>
+        <a href="achievements.html">Achievements</a>
+        <a href="news.html">News</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero research-page-hero">
+        <p class="eyebrow">Research Themes</p>
+        <h1>Research</h1>
+        <p data-research-intro>생명체 모사 전자 시스템, 뉴로모픽 컴퓨팅, 포스트 실리콘 소자 및 시스템을 중심으로 차세대 지능형 전자 시스템을 연구합니다.</p>
+      </section>
+      <section class="section research-themes">
+        <div class="research-themes-list" data-research-areas></div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><span data-footer>© 2026 Emerging Electronic Device Lab</span><a href="contact.html">Contact</a></footer>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
+
+

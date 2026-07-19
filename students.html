@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Students | EED Lab</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="members">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Go to home">
+        <span class="brand-mark">E</span>
+        <span><strong data-lab-short>EED Lab</strong><small data-lab-subtitle>Emerging Electronic Device</small></span>
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <div class="nav-dropdown active">
+          <a class="active" href="pi.html">Members</a>
+          <div class="nav-submenu" aria-label="Members submenu">
+            <a href="pi.html">PI</a>
+            <a class="active" href="students.html">Students</a>
+            <a href="alumni.html">Alumni</a>
+          </div>
+        </div>
+        <a href="achievements.html">Achievements</a>
+        <a href="news.html">News</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero muted-hero">
+        <p class="eyebrow">Students</p>
+        <h1>Students</h1>
+        <p data-members-intro>Emerging Electronic Device Lab members.</p>
+      </section>
+
+      <section class="section muted members-section">
+        <section id="students" class="member-subsection">
+          <div class="section-heading compact">
+            <div>
+              <p class="eyebrow">Students</p>
+              <h2>Students</h2>
+            </div>
+            <button class="editor-add-member" type="button" data-add-member="student">Add Student</button>
+          </div>
+          <div class="member-card-grid" data-students></div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer"><span data-footer>© 2026 Emerging Electronic Device Lab</span><a href="contact.html">Contact</a></footer>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

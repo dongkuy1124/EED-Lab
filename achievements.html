@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Achievements | EED Lab</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="achievements">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Go to home">
+        <span class="brand-mark">E</span>
+        <span><strong data-lab-short>EED Lab</strong><small data-lab-subtitle>Emerging Electronic Device</small></span>
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <div class="nav-dropdown">
+          <a href="pi.html">Members</a>
+          <div class="nav-submenu" aria-label="Members submenu">
+            <a href="pi.html">PI</a>
+            <a href="students.html">Students</a>
+            <a href="alumni.html">Alumni</a>
+          </div>
+        </div>
+        <a class="active" href="achievements.html">Achievements</a>
+        <a href="news.html">News</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero">
+        <p class="eyebrow">Achievements</p>
+        <h1>Publications</h1>
+        <p>Google Scholar profile and CV-based publication list organized by year.</p>
+        <p class="jcr-note">JCR 2024 JIF ranking shown by the best listed subject category.</p>
+        <a class="button primary scholar-button" data-scholar-link href="https://scholar.google.co.kr/citations?user=Xtv1bkoAAAAJ&hl=ko" target="_blank" rel="noopener">Google Scholar</a>
+      </section>
+
+      <section class="section publications" data-publications></section>
+    </main>
+
+    <footer class="site-footer"><span data-footer>© 2026 Emerging Electronic Device Lab</span><a href="contact.html">Contact</a></footer>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

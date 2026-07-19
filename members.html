@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PI | EED Lab</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-page="members">
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Go to home">
+        <span class="brand-mark">E</span>
+        <span><strong data-lab-short>EED Lab</strong><small data-lab-subtitle>Emerging Electronic Device</small></span>
+      </a>
+      <button class="menu-button" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+        <a href="index.html">Home</a>
+        <a href="research.html">Research</a>
+        <div class="nav-dropdown active">
+          <a class="active" href="pi.html">Members</a>
+          <div class="nav-submenu" aria-label="Members submenu">
+            <a class="active" href="pi.html">PI</a>
+            <a href="students.html">Students</a>
+            <a href="alumni.html">Alumni</a>
+          </div>
+        </div>
+        <a href="achievements.html">Achievements</a>
+        <a href="news.html">News</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="page-hero muted-hero">
+        <p class="eyebrow">PI</p>
+        <h1>Principal Investigator</h1>
+        <p data-members-intro>Emerging Electronic Device Lab principal investigator.</p>
+      </section>
+
+      <section class="section muted members-section">
+        <section id="pi" class="member-subsection">
+          <div class="section-heading compact">
+            <p class="eyebrow">PI</p>
+            <h2>Principal Investigator</h2>
+          </div>
+          <article class="profile professor-profile">
+            <div class="member-photo-wrap" data-photo-target="pi">
+              <img class="member-photo" data-pi-photo alt="PI photo" hidden />
+              <div class="avatar" data-pi-avatar>PI</div>
+              <label class="editor-photo-upload" data-upload-member-photo="pi">
+                Upload Photo
+                <input type="file" accept="image/*" data-member-photo-input data-upload-member-photo="pi" />
+              </label>
+            </div>
+            <div>
+              <h2 class="member-name" data-professor-name>Prof. Dong Gue Roe, 노동규</h2>
+              <p class="role" data-professor-role>Principal Investigator</p>
+              <p data-professor-affiliation>
+                Major in Semiconductor and Display Engineering<br />
+                Hanyang University ERICA
+              </p>
+              <p class="date-note" data-professor-note>Current affiliation from September 2026</p>
+              <a data-professor-email href="mailto:dongkuy1124@gmail.com">dongkuy1124@gmail.com</a>
+            </div>
+          </article>
+        </section>
+
+        <div class="cv-grid">
+          <section class="cv-card">
+            <h3>Education</h3>
+            <ul data-education></ul>
+          </section>
+
+          <section class="cv-card">
+            <h3>Experience</h3>
+            <ul data-experience></ul>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><span data-footer>© 2026 Emerging Electronic Device Lab</span><a href="contact.html">Contact</a></footer>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
