@@ -1495,3 +1495,26 @@ body.editor-controls-mode .editor-publication-year-tools {
     aspect-ratio: 3 / 1;
   }
 }
+
+/* Preserve the same visual density on wide desktop monitors. */
+@media (min-width: 1600px) {
+  .hero-content {
+    width: min(920px, 48vw);
+  }
+
+  .hero-content h1 {
+    max-width: 920px;
+    font-size: 100px;
+  }
+
+  .hero-content > p:not(.eyebrow) {
+    max-width: 760px;
+    font-size: 22px;
+  }
+
+  .hero-actions .button {
+    min-height: 52px;
+    padding: 14px 22px;
+    font-size: 16px;
+  }
+}
