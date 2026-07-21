@@ -1593,3 +1593,29 @@ body.editor-controls-mode .editor-publication-year-tools {
     font-size: 28px;
   }
 }
+/* Keep every desktop research image flush with its matching description card. */
+@media (min-width: 901px) {
+  .research-theme-card {
+    align-items: stretch;
+  }
+
+  .research-theme-image {
+    display: block;
+    align-self: stretch;
+    min-height: 0;
+  }
+
+  .research-theme-card .research-visual {
+    display: block;
+    height: 100%;
+    min-height: 100%;
+    aspect-ratio: auto;
+  }
+
+  .research-theme-card .research-visual img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
