@@ -1619,3 +1619,19 @@ body.editor-controls-mode .editor-publication-year-tools {
     object-fit: cover;
   }
 }
+/* Keep the image-to-copy ratio identical when even research themes reverse sides. */
+@media (min-width: 901px) {
+  .research-theme-card:nth-child(even) {
+    grid-template-columns: minmax(0, 58%) minmax(340px, 42%) !important;
+  }
+}
+/* Fixed desktop research-theme ratio: image 42%, copy 58%. */
+@media (min-width: 901px) {
+  .research-theme-card {
+    grid-template-columns: 42% 58% !important;
+  }
+
+  .research-theme-card:nth-child(even) {
+    grid-template-columns: 58% 42% !important;
+  }
+}
