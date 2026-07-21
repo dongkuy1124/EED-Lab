@@ -1489,32 +1489,107 @@ body.editor-controls-mode .editor-publication-year-tools {
   }
 }
 
-/* Keep long desktop research themes compact without changing the home page height. */
-@media (min-width: 1101px) {
-  .research-theme-card .research-visual {
-    aspect-ratio: 3 / 1;
-  }
-}
-
-/* Preserve the same visual density on wide desktop monitors. */
-@media (min-width: 1600px) {
+/* Shared desktop geometry: laptop and wide desktop use the same content scale. */
+@media (min-width: 901px) {
   .hero-content {
-    width: min(920px, 48vw);
+    width: min(var(--hero-text-width, 720px), calc(100vw - 10vw));
   }
 
   .hero-content h1 {
-    max-width: 920px;
-    font-size: 100px;
+    max-width: 680px;
+    font-size: var(--hero-headline-size, 76px);
   }
 
   .hero-content > p:not(.eyebrow) {
-    max-width: 760px;
-    font-size: 22px;
+    max-width: 620px;
+    font-size: var(--hero-intro-size, 20px);
   }
 
-  .hero-actions .button {
-    min-height: 52px;
-    padding: 14px 22px;
-    font-size: 16px;
+  .research-theme-card .research-visual {
+    aspect-ratio: 2 / 1;
+  }
+}
+/* Mobile-first overrides: saved desktop positions never control the phone layout. */
+@media (max-width: 820px) {
+  .hero {
+    min-height: max(620px, calc(100svh - 66px));
+  }
+
+  .hero img {
+    object-position: center;
+  }
+
+  .hero-content {
+    top: clamp(86px, 14svh, 118px) !important;
+    left: 6vw !important;
+    width: 88vw !important;
+    max-width: 620px;
+    padding-bottom: 56px;
+  }
+
+  .hero-content h1 {
+    max-width: 620px;
+    font-size: 56px !important;
+    line-height: 1.04;
+  }
+
+  .hero-content > p:not(.eyebrow) {
+    max-width: 560px;
+    font-size: 18px !important;
+    line-height: 1.65;
+  }
+
+  .page-hero {
+    padding: 66px 6vw 48px;
+  }
+
+  .page-hero h1 {
+    font-size: 48px;
+  }
+
+  .section,
+  .research-themes {
+    padding-right: 6vw;
+    padding-left: 6vw;
+  }
+
+  .research-theme-copy {
+    padding: 28px 24px;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero {
+    min-height: 610px;
+  }
+
+  .hero-content {
+    top: 82px !important;
+  }
+
+  .hero-content h1 {
+    font-size: 42px !important;
+    line-height: 1.06;
+  }
+
+  .hero-content > p:not(.eyebrow) {
+    font-size: 16px !important;
+  }
+
+  .hero-actions {
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .page-hero h1 {
+    font-size: 38px;
+  }
+
+  .research-theme-copy {
+    padding: 24px 20px;
+  }
+
+  .research-theme-copy h2 {
+    font-size: 28px;
   }
 }
