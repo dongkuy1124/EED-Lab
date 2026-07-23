@@ -132,24 +132,6 @@ window.siteData = {
     "intro": "생명체 모사 전자 시스템, 뉴로모픽 컴퓨팅, 포스트 실리콘 소자 및 시스템을 중심으로 차세대 지능형 전자 시스템을 연구합니다.",
     "areas": [
       {
-        "title": "Biomimetic systems",
-        "image": "biomimetic",
-        "text": "생명체의 동작을 모사한 전자 시스템을 구현하여 기존 전자 시스템의 문제점을 해결합니다.",
-        "problem": "기존 전자 시스템은 고정된 회로 구조와 높은 에너지 소모로 인해 환경 변화, 복잡한 신호, 실시간 적응에 한계를 가집니다.",
-        "approach": "생명체의 감각, 적응, 피드백, 자가조절 원리를 전자소자와 회로 구조에 반영하여 효율적이고 유연한 시스템을 설계합니다.",
-        "points": [
-          "생체 감각기관과 신경계의 신호 처리 방식을 전자 시스템으로 구현합니다.",
-          "환경 변화에 반응하는 적응형 소자 및 회로 동작을 설계합니다.",
-          "저전력, 고효율, 실시간 처리가 가능한 생체모사 하드웨어를 지향합니다."
-        ],
-        "keywords": [
-          "Biomimetic electronics",
-          "Adaptive sensing",
-          "Bio-inspired hardware",
-          "Feedback system"
-        ]
-      },
-      {
         "title": "Neuromorphic computing",
         "image": "neuromorphic",
         "text": "생체 시냅스의 동작을 모사한 뉴로모픽 디바이스를 이용하여 AI 연산에 특화된 컴퓨팅 시스템을 구현합니다.",
@@ -165,6 +147,24 @@ window.siteData = {
           "Synaptic transistor",
           "In-memory computing",
           "AI hardware"
+        ]
+      },
+      {
+        "title": "Biomimetic systems",
+        "image": "biomimetic",
+        "text": "생명체의 동작을 모사한 전자 시스템을 구현하여 기존 전자 시스템의 문제점을 해결합니다.",
+        "problem": "기존 전자 시스템은 고정된 회로 구조와 높은 에너지 소모로 인해 환경 변화, 복잡한 신호, 실시간 적응에 한계를 가집니다.",
+        "approach": "생명체의 감각, 적응, 피드백, 자가조절 원리를 전자소자와 회로 구조에 반영하여 효율적이고 유연한 시스템을 설계합니다.",
+        "points": [
+          "생체 감각기관과 신경계의 신호 처리 방식을 전자 시스템으로 구현합니다.",
+          "환경 변화에 반응하는 적응형 소자 및 회로 동작을 설계합니다.",
+          "저전력, 고효율, 실시간 처리가 가능한 생체모사 하드웨어를 지향합니다."
+        ],
+        "keywords": [
+          "Biomimetic electronics",
+          "Adaptive sensing",
+          "Bio-inspired hardware",
+          "Feedback system"
         ]
       },
       {
