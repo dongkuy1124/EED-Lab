@@ -9,8 +9,8 @@ window.siteData = {
     "eyebrow": "Next-generation semiconductor device",
     "headline": "Emerging Electronic Device Lab",
     "intro": "차세대 지능형 반도체 소자와 이를 이용한 시스템을 연구합니다.",
-    "noticeTitle": "Graduate students and researchers are welcome.",
-    "noticeText": "뉴로모픽 소자, 차세대 반도체 시스템 구현 연구에 관심 있는 학생을 모집합니다."
+    "noticeTitle": "",
+    "noticeText": "뉴로모픽 및 차세대 반도체 소자 연구에 관심 있는 대학원생 및 연구원을 모집합니다."
   },
   "design": {
     "heroTextTop": 160,
